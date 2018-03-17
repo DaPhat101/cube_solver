@@ -1,6 +1,7 @@
-*.iml
-*.xml
+#--------------------IDE FOLDERS------------------------#
 
+.idea/
+.vscode/
 #--------------------PYTHON STUFF-----------------------#
 
 # Byte-compiled / optimized / DLL files

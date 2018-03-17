@@ -5,7 +5,8 @@ filename1 = ''
 filename2 = ''
 filename3 = ''
 
-img0 = cv2.imread(filename0)  # Import images
+# Import images
+img0 = cv2.imread(filename0)
 img1 = cv2.imread(filename1)
 img2 = cv2.imread(filename2)
 img3 = cv2.imread(filename3)
@@ -15,7 +16,8 @@ colors_index = ['W', 'Y', 'B', 'G', 'R', 'O']
 
 def avg_color(coords, index):
 
-    x_size = abs(coords[2] - coords[0])  # Find size of defined region
+    # Find size of defined region
+    x_size = abs(coords[2] - coords[0])
     y_size = abs(coords[3] - coords[1])
     full_size = x_size * y_size
 
@@ -25,11 +27,14 @@ def avg_color(coords, index):
 
     for i in range(x_size):
         for j in range(y_size):
-            b_sum += image.item(i, j, 0)  # Find and sum the value for each of the b, g, and r components for each pixel
-            g_sum += image.item(i, j, 1)
-            r_sum += image.item(i, j, 2)
+            
+            # Find and sum the value for each of the b, g, and r components for each pixel
+            b_sum += image.item(coords[2] + i, coords[3] + j, 0)
+            g_sum += image.item(coords[2] + i, coords[3] + j, 1)
+            r_sum += image.item(coords[2] + i, coords[3] + j, 2)
 
-    b_final = b_sum / full_size  # Find the average values for each color
+    # Find the average values for each color
+    b_final = b_sum / full_size
     g_final = g_sum / full_size
     r_final = r_sum / full_size
 
@@ -88,11 +93,12 @@ positions = [[[[[0, 0, 0, 0], 0], [[0, 0, 0, 0], ], [[0, 0, 0, 0], 0]],
               [[[0, 0, 0, 0], 0], [None, None], [[0, 0, 0, 0], 0]],
               [[[0, 0, 0, 0], 0], [[0, 0, 0, 0], 0], [[0, 0, 0, 0], 0]]]]
 # cube:[face:[row:[tile:[coordinates:[x_final, y_final, x_initial, y_initial], image]]]]]
+# initial coords are top left of the region, final coords are bottom right
 
 for i in range(6):
     for j in range(3):
         for k in range(3):
-            if positions[i][j][k][0] is not None:  # Check that the tile has coordinates
+            if positions[i][j][k][0] is not None:  # Check if the tile has coordinates
                 scrambled[i][j][k] = find_color(avg_color(positions[i][j][k][0], positions[i][j][k][1]))
             else:
                 scrambled[i][j][k] = colors_index[i]
